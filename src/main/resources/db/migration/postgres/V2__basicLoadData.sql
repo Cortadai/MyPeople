@@ -1,18 +1,18 @@
 /*Data for the table locations */
-INSERT INTO locations(location_id, street_address, postal_code, city, state_province, country_id)
-VALUES (1400, '2014 Jabberwocky Rd', '26192', 'Southlake', 'Texas', 'US');
-INSERT INTO locations(location_id, street_address, postal_code, city, state_province, country_id)
-VALUES (1500, '2011 Interiors Blvd', '99236', 'South San Francisco', 'California', 'US');
-INSERT INTO locations(location_id, street_address, postal_code, city, state_province, country_id)
-VALUES (1700, '2004 Charade Rd', '98199', 'Seattle', 'Washington', 'US');
-INSERT INTO locations(location_id, street_address, postal_code, city, state_province, country_id)
-VALUES (1800, '147 Spadina Ave', 'M5V 2L7', 'Toronto', 'Ontario', 'CA');
-INSERT INTO locations(location_id, street_address, postal_code, city, state_province, country_id)
-VALUES (2400, '8204 Arthur St', NULL, 'London', NULL, 'UK');
-INSERT INTO locations(location_id, street_address, postal_code, city, state_province, country_id)
-VALUES (2500, 'Magdalen Centre, The Oxford Science Park', 'OX9 9ZB', 'Oxford', 'Oxford', 'UK');
-INSERT INTO locations(location_id, street_address, postal_code, city, state_province, country_id)
-VALUES (2700, 'Schwanthalerstr. 7031', '80925', 'Munich', 'Bavaria', 'DE');
+INSERT INTO locations(location_id, street_address, postal_code, city, state_province)
+VALUES (1400, '2014 Jabberwocky Rd', '26192', 'Southlake', 'Texas');
+INSERT INTO locations(location_id, street_address, postal_code, city, state_province)
+VALUES (1500, '2011 Interiors Blvd', '99236', 'South San Francisco', 'California');
+INSERT INTO locations(location_id, street_address, postal_code, city, state_province)
+VALUES (1700, '2004 Charade Rd', '98199', 'Seattle', 'Washington');
+INSERT INTO locations(location_id, street_address, postal_code, city, state_province)
+VALUES (1800, '147 Spadina Ave', 'M5V 2L7', 'Toronto', 'Ontario');
+INSERT INTO locations(location_id, street_address, postal_code, city, state_province)
+VALUES (2400, '8204 Arthur St', NULL, 'London', NULL);
+INSERT INTO locations(location_id, street_address, postal_code, city, state_province)
+VALUES (2500, 'Magdalen Centre, The Oxford Science Park', 'OX9 9ZB', 'Oxford', 'Oxford');
+INSERT INTO locations(location_id, street_address, postal_code, city, state_province)
+VALUES (2700, 'Schwanthalerstr. 7031', '80925', 'Munich', 'Bavaria');
 
 
 /*Data for the table jobs */
@@ -90,7 +90,7 @@ INSERT INTO employees(employee_id, first_name, last_name, email, phone_number, h
 VALUES (100, 'Steven', 'King', 'steven.king@sqltutorial.org', '515.123.4567', '1987-06-17', 4, 24000.00, 9);
 INSERT INTO employees(employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary,
                       department_id)
-VALUES (101, 'Neena', 'Kochhar', 'neena.kochhar@sqltutorial.org', '515.123.4568', '1989-09-21', 5, 17000.00 9);
+VALUES (101, 'Neena', 'Kochhar', 'neena.kochhar@sqltutorial.org', '515.123.4568', '1989-09-21', 5, 17000.00, 9);
 INSERT INTO employees(employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary,
                       department_id)
 VALUES (102, 'Lex', 'De Haan', 'lex.de haan@sqltutorial.org', '515.123.4569', '1993-01-13', 5, 17000.00, 9);

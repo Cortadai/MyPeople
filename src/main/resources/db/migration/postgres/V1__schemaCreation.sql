@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS employees;
-DROP TABLE IF EXISTS departments;
 DROP TABLE IF EXISTS locations;
+DROP TABLE IF EXISTS departments;
 DROP TABLE IF EXISTS jobs;
+DROP TABLE IF EXISTS employees;
 
 
 
@@ -11,9 +11,7 @@ CREATE TABLE locations
     street_address CHARACTER VARYING(40),
     postal_code    CHARACTER VARYING(12),
     city           CHARACTER VARYING(30) NOT NULL,
-    state_province CHARACTER VARYING(25),
-    country_id     CHARACTER(2)          NOT NULL,
-    FOREIGN KEY (country_id) REFERENCES countries (country_id) ON UPDATE CASCADE ON DELETE CASCADE
+    state_province CHARACTER VARYING(25)
 );
 
 CREATE TABLE departments
