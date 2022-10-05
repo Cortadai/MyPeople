@@ -18,7 +18,7 @@ CREATE TABLE `users`
     `name`     varchar(60)  DEFAULT NULL,
     `password` varchar(10)  DEFAULT NULL,
     `username` varchar(20)  DEFAULT NULL,
-    `active` boolean DEFAULT NOT NULL,
+    `active` boolean DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `UKr43af9ap4edm43mmtq01oddj6` (`username`),
     UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`)
