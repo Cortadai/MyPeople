@@ -13,49 +13,29 @@ import java.util.Collections;
 @Configuration
 public class SwaggerConfig {
 
-//    public static final String AUTHORIZATION_HEADER = "Authorization";
-
-//    private ApiKey apiKey() {
-//        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
-//    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfo(
-                "Spring Boot - MyBusiness - REST API",
-                "Spring boot - MyBusiness - REST API - Documentation",
-                "1",
-                "Terms of service",
-                new Contact("Rafa Rodríguez Fernández",
-                        "https://github.com/RafaelRFP",
-                        "rafael.rodriguez@entelgy-ibai.com"),
-                "License of API",
-                "API license URL",
-                Collections.emptyList()
-        );
-    }
-
-    @Bean
+	private ApiInfo apiInfo() {
+	    return new ApiInfo(
+	            "Spring Boot - HypeApp - REST API",
+	            "Spring boot - HypeApp - REST API - Documentation",
+	            "1",
+	            "Terms of service",
+	            new Contact("David Palanca y Rafa Rodriguez",
+	                    "https://github.com/Cortadai",
+	                    "david.cortabarria@gmail.com"),
+	            "License of API",
+	            "API license URL",
+	            Collections.emptyList()
+	    );
+	}
+	@Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
 //                .securityContexts(Collections.singletonList(securityContext()))
 //                .securitySchemes(List.of(apiKey()))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.EGY.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.springboot.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
-
-//    private SecurityContext securityContext() {
-//        return SecurityContext.builder().securityReferences(defaultAuth()).build();
-//    }
-
-//    private List<SecurityReference> defaultAuth() {
-//        AuthorizationScope authorizationScope = new AuthorizationScope(
-//                "global", "accessEverything");
-//        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-//        authorizationScopes[0] = authorizationScope;
-//        return List.of(new SecurityReference("JWT", authorizationScopes));
-//    }
-
 }
