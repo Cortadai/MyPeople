@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.entity.postgres.Location;
-import com.example.springboot.repository.LocationRepository;
+import com.example.springboot.repository.postgres.LocationRepository;
 
 @Service
 public class LocationServiceImpl implements LocationService {

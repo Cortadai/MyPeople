@@ -1,5 +1,5 @@
-/*
-package com.example.springboot.dto;
+
+package com.example.springboot.dto.security;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -27,4 +27,3 @@ public class LoginDto {
 	private String password;
 }
 
-*/

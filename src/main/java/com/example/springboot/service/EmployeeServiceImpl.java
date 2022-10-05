@@ -11,9 +11,9 @@ import com.example.springboot.dto.postgres.EmployeeDTO;
 import com.example.springboot.entity.postgres.Department;
 import com.example.springboot.entity.postgres.Employee;
 import com.example.springboot.entity.postgres.Job;
-import com.example.springboot.repository.DepartmentRepository;
-import com.example.springboot.repository.EmployeeRepository;
-import com.example.springboot.repository.JobRepository;
+import com.example.springboot.repository.postgres.DepartmentRepository;
+import com.example.springboot.repository.postgres.EmployeeRepository;
+import com.example.springboot.repository.postgres.JobRepository;
 import com.example.springboot.utils.Constants;
 
 @Service

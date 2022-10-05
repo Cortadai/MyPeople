@@ -1,4 +1,4 @@
-package com.example.springboot.repository;
+package com.example.springboot.repository.postgres;
 
 import java.util.Optional;
 

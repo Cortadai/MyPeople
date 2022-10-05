@@ -1,4 +1,4 @@
-/*
+
 package com.example.springboot.exception;
 
 import org.springframework.http.HttpStatus;
@@ -28,4 +28,3 @@ public class ApiException extends RuntimeException {
 		return message;
 	}
 }
-*/

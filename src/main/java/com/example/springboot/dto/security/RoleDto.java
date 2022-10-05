@@ -1,4 +1,4 @@
-package com.example.springboot.dto;
+package com.example.springboot.dto.security;
 
 import java.util.Set;
 

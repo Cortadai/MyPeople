@@ -1,4 +1,4 @@
-/*
+
 package com.example.springboot.controller.security;
 
 import javax.validation.Valid;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springboot.dto.JwtAuthResponse;
-import com.example.springboot.dto.LoginDto;
+import com.example.springboot.dto.security.JwtAuthResponse;
+import com.example.springboot.dto.security.LoginDto;
 import com.example.springboot.facade.AuthFacade;
 
 import io.swagger.annotations.Api;

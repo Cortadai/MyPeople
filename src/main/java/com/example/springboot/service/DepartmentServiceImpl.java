@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.entity.postgres.Department;
-import com.example.springboot.repository.DepartmentRepository;
+import com.example.springboot.repository.postgres.DepartmentRepository;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {

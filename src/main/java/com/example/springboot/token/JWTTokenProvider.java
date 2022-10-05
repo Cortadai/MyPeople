@@ -1,4 +1,4 @@
-/*
+
 package com.example.springboot.token;
 
 import java.util.Date;
@@ -70,4 +70,3 @@ public class JWTTokenProvider {
 	}
 	
 }
-*/

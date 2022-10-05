@@ -8,7 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.springboot.dto.UserDto;
+import com.example.springboot.dto.security.UserDto;
 import com.example.springboot.entity.security.Role;
 import com.example.springboot.entity.security.User;
 import com.example.springboot.repository.security.RoleRepository;

@@ -13,7 +13,7 @@ import com.example.springboot.entity.security.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 
-	Optional<User> findByNameOrEmail(String name, String email);
+	Optional<User> findByUsernameOrEmail(String username, String email);
 
 	@Query("SELECT u FROM User u WHERE " +
 			"u.id LIKE CONCAT('%',:query,'%')")

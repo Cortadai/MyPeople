@@ -1,4 +1,4 @@
-/*
+
 package com.example.springboot.configuration.security;
 
 import org.springframework.context.annotation.Bean;
@@ -14,8 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.example.springboot.token.JWTTokenProvider;
 import com.example.springboot.token.JwtAuthenticationEntryPoint;
+import com.example.springboot.token.JWTTokenProvider;
 import com.example.springboot.token.JwtAuthenticationFilter;
 import com.example.springboot.utils.CustomUserDetailsService;
 
@@ -78,4 +78,3 @@ public class SecurityConfig {
 	    return http.build();
 	}
 }
-*/

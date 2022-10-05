@@ -1,4 +1,4 @@
-/*
+
 package com.example.springboot.utils;
 
 import java.util.Collection;
@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-	    User user = userRepository.findByNameOrEmail(usernameOrEmail, usernameOrEmail).
+	    User user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail).
 	            orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail));
 	    return new org.springframework.security.core.userdetails.User(
 	            user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
@@ -43,4 +43,3 @@ public class CustomUserDetailsService implements UserDetailsService{
 	    return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
 }
-*/

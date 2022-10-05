@@ -1,5 +1,5 @@
-/*
-package com.example.springboot.dto;
+
+package com.example.springboot.dto.security;
 
 import lombok.Data;
 
@@ -14,4 +14,3 @@ public class JwtAuthResponse {
 	}
 
 }
-*/

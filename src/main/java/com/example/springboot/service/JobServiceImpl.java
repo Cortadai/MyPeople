@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.springboot.dto.postgres.JobDTO;
 import com.example.springboot.entity.postgres.Job;
-import com.example.springboot.repository.JobRepository;
+import com.example.springboot.repository.postgres.JobRepository;
 import com.example.springboot.utils.Constants;
 
 @Service

@@ -1,4 +1,4 @@
-/*
+
 package com.example.springboot.utils;
 
 import ch.qos.logback.classic.Level;
@@ -24,4 +24,3 @@ public class HighlightLogBack extends ForegroundCompositeConverterBase<ILoggingE
     }
 
 }
-*/

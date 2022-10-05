@@ -1,4 +1,4 @@
-/*
+
 package com.example.springboot.facade;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.example.springboot.dto.JwtAuthResponse;
-import com.example.springboot.dto.LoginDto;
+import com.example.springboot.dto.security.JwtAuthResponse;
+import com.example.springboot.dto.security.LoginDto;
 import com.example.springboot.facade.AuthFacade;
 import com.example.springboot.token.JWTTokenProvider;
 
@@ -38,4 +38,3 @@ public class AuthFacadeImpl implements  AuthFacade{
 	    return new ResponseEntity<>(new JwtAuthResponse(token), HttpStatus.OK);
 	}
 }
-*/

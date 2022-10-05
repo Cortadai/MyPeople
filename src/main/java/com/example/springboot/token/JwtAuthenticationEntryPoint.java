@@ -1,4 +1,4 @@
-/*
+
 package com.example.springboot.token;
 
 import java.io.IOException;
@@ -21,4 +21,3 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     }
 
 }
-*/

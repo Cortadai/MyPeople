@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springboot.dto.UserDto;
+import com.example.springboot.dto.security.UserDto;
 import com.example.springboot.entity.security.Role;
 import com.example.springboot.entity.security.User;
 import com.example.springboot.service.security.UserService;

@@ -24,7 +24,7 @@ import java.util.Map;
 @EnableJpaRepositories(
         entityManagerFactoryRef = "postgresEntityManagerFactory",
         transactionManagerRef = "postgresTransactionManager",
-        basePackages = {"com.example.springboot.repository"}
+        basePackages = {"com.example.springboot.repository.postgres"}
 )
 public class PostgresDataConfig {
     private final Environment env;
