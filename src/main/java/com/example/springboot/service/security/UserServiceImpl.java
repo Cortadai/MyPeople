@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.example.springboot.dto.security.UserDto;
@@ -14,16 +15,13 @@ import com.example.springboot.entity.security.User;
 import com.example.springboot.repository.security.RoleRepository;
 import com.example.springboot.repository.security.UserRepository;
 
-
-
-
 @Service
 public class UserServiceImpl implements UserService {
 
 	UserRepository userRepository;
 
 	RoleRepository roleRepository;
-	
+
 	ModelMapper modelMapper;
 
 	@Autowired
@@ -32,34 +30,45 @@ public class UserServiceImpl implements UserService {
 		this.roleRepository = roleRepository;
 		this.modelMapper = modelMapper;
 	}
-	
+
+	// MÉTODOS SIN DTO
+
+	// Crear un usuario
+	@Override
+	public User createUser(User user) {
+		Role roleUsuario = roleRepository.findByName("ROLE_USER");
+		user.addRole(roleUsuario);
+		return userRepository.save(user);
+	}
+
+	// Listar 1 Usuario
 	@Override
 	public List<User> searchJQPL(String query) {
 		return userRepository.searchUser(query);
 	}
-	
+
+	// Listar todos los usuarios
+
+	@Override
+	public List<User> buscarTodosUsers() {
+		List<User> users = userRepository.findAll();
+		return users;
+	}
+
+	// Actualizar un usuario
 	@Override
 	public String updateUser(User user, long id) {
 		String mensaje = " ";
 
 		User existingUserId = userRepository.findById(id).get();
-		// Product existingProduct = productRepository.findBySku(sku).get();
 
 		if (existingUserId != null) {
-			//user.setId(id);
-
 			existingUserId.setName(user.getName());
 			existingUserId.setEmail(user.getEmail());
 			existingUserId.setPassword(user.getPassword());
 			existingUserId.setUsername(user.getUsername());
 			existingUserId.setActive(user.isActive());
-			/*
-			List<Role> listRole = new ArrayList<>();
-			listRole.addAll(user.getRoles());
-			
-			Role miRole = roleRepository.findByName(listRole.get(0).getName());
-			existingUserId.getRoles().add(miRole);
-		*/
+
 			userRepository.save(existingUserId);
 			mensaje = "usuario actualizado";
 		} else {
@@ -67,6 +76,8 @@ public class UserServiceImpl implements UserService {
 		}
 		return mensaje;
 	}
+
+	// Eliminar un usuario
 
 	@Override
 	public String deleteUser(User user, long id) {
@@ -76,9 +87,7 @@ public class UserServiceImpl implements UserService {
 
 		if (existingUserId != null) {
 			user.setId(id);
-			
-			//emailService.sendEmail(buildEmailBody(existingUserId.getEmail()));
-			
+
 			userRepository.delete(existingUserId);
 			mensaje = "usuario eliminado";
 		} else {
@@ -86,36 +95,32 @@ public class UserServiceImpl implements UserService {
 		}
 		return mensaje;
 	}
-/*
-	private EmailBody buildEmailBody(String email) {
-		//LOGGER.info("Local environment: " + environment.getProperty("local.environment"));
-	
-		return new EmailBody(email,
-		        "Operation completed successfully for user", "Archive in bulk");
-	}*/
 
+	// EXTRACION DE LISTA DE USUARIOS AUTOMÁTICA
+	@Scheduled(cron = "*/10 * * * * *", zone = "Europe/Paris")
 	@Override
-	public User createUser(User user) {
-		Role roleUsuario = roleRepository.findByName("ROLE_USER");
-		user.addRole(roleUsuario);
-		return userRepository.save(user);
+	public void Imprimir_informacion() {
+
+		List<User> usuarios = new ArrayList<>();
+		usuarios = userRepository.findAll();
+
+		for (User listaUsuario : usuarios) {
+
+			System.out.println(listaUsuario.getName());
+		}
 	}
 
-	@Override
-	public List<User> buscarTodosUsers() {
-		List<User> users = userRepository.findAll(); 
-		return users;
-	}
-
-
-	
 	/////////////////////
-	
+
+	// Métodos con DTO
+
+	// Listar 1 Usuario
+
 	@Override
-	public List<UserDto> searchJQPL2(String query) 
-	
+	public List<UserDto> searchJQPL2(String query)
+
 	{
-		List<UserDto>  listaDto = new ArrayList<UserDto>();
+		List<UserDto> listaDto = new ArrayList<UserDto>();
 		List<User> lista = userRepository.searchUser(query);
 		for (User userlista : lista) {
 			listaDto.add(maptoDto(userlista));
@@ -123,16 +128,20 @@ public class UserServiceImpl implements UserService {
 		return listaDto;
 	}
 
+	// Listar todos los usuarios
+
 	@Override
 	public List<UserDto> buscarTodosUsers2() {
-		List<UserDto>  listaDto = new ArrayList<UserDto>();
-		
+		List<UserDto> listaDto = new ArrayList<UserDto>();
+
 		List<User> users = userRepository.findAll();
 		for (User userlista : users) {
 			listaDto.add(maptoDto(userlista));
 		}
 		return listaDto;
 	}
+
+	// Crear 1 usuario
 
 	@Override
 	public UserDto createUser2(UserDto user) {
@@ -148,14 +157,18 @@ public class UserServiceImpl implements UserService {
 		return userDto;
 	}
 
+	// Eliminar 1 usuario
+
 	@Override
 	public String deleteUser2(UserDto user, long id) {
 		UserDto userDto = new UserDto();
 		User usuarioConvertido = maptoEntity(user);
 		userRepository.delete(usuarioConvertido);
 		return "Usuario eliminado";
-		
+
 	}
+
+	// Actualizar 1 usuario
 
 	@Override
 	public String updateUser2(UserDto user, long id) {
@@ -166,14 +179,14 @@ public class UserServiceImpl implements UserService {
 		// Product existingProduct = productRepository.findBySku(sku).get();
 
 		if (existingUserId != null) {
-			//user.setId(id);
+			// user.setId(id);
 
 			existingUserId.setName(usuarioConvertido.getName());
 			existingUserId.setEmail(usuarioConvertido.getEmail());
 			existingUserId.setPassword(usuarioConvertido.getPassword());
 			existingUserId.setUsername(usuarioConvertido.getUsername());
 			existingUserId.setActive(usuarioConvertido.isActive());
-			
+
 			userRepository.save(existingUserId);
 			mensaje = "usuario actualizado";
 		} else {
@@ -182,28 +195,20 @@ public class UserServiceImpl implements UserService {
 		return mensaje;
 
 	}
-	
-	/*
-	 * @Autowired
-	public ProviderServiceImpl(ProviderRepository providersRepository, ModelMapper modelMapper) {
-		this.providersRepository = providersRepository;
-		this.modelMapper = modelMapper;
+
+	private UserDto maptoDto(User user) {
+		return modelMapper.map(user, UserDto.class);
 	}
 
-	@Override
-	public ProviderDto getProviderById(Integer id) {
-		Provider provider = providersRepository.findById(id).get();
-		return maptoDto(provider);
+	private User maptoEntity(UserDto dto) {
+		return modelMapper.map(dto, User.class);
 	}
-
-	
-	}*/
-	 
-	 private UserDto maptoDto(User user) {
-			return modelMapper.map(user, UserDto.class);
-	 }
-	 
-	 private User maptoEntity(UserDto dto) {
-			return modelMapper.map(dto, User.class);
-	 }
 }
+/*
+ * private EmailBody buildEmailBody(String email) {
+ * //LOGGER.info("Local environment: " +
+ * environment.getProperty("local.environment"));
+ * 
+ * return new EmailBody(email, "Operation completed successfully for user",
+ * "Archive in bulk"); }
+ */

@@ -32,6 +32,8 @@ public interface UserService {
 	String deleteUser2(UserDto user, long id);
 
 	String updateUser2(UserDto user, long id);
+
+	void Imprimir_informacion();
 	
 
 }

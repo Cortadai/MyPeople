@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <!--
+        Springboot by default uses an SLF4J implementation called LogBack.
+        If we do not configure it, by default it will just show logs on the Console
+        from INFO level and upwards. It is always good to remember the levels from
+        fatal (the most serious) to trace (the last serious):
+
+        fatal (the most serious)
+        error
+        warn
+        info
+        debug
+        trace (the least serious)
+    -->
+
+    <!-- DEV PROFILE-->
+    <springProfile name="dev">
+
+        <!-- custom coloring conversion -->
+        <conversionRule conversionWord="customHighlight" converterClass="com.example.springboot.utils.HighlightLogBack"/>
+
+        <property name="LOG_FOLDER" value="./logs"/>
+        <property name="LOG_FILE" value="hype_dev"/>
+
+        <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+            <withJansi>true</withJansi>
+            <encoder>
+                <!-- Default pattern: <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n.</pattern> -->
+                <!-- Another pattern: Date | LogLevel | Thread | Class assigned to the Logger | Class emitting the Logging | Message -->
+                <!-- <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) [%thread] %logger{100} %yellow(%C{1.}) : %msg%n%throwable</pattern> -->
+                <!-- Yet another pattern: %d{dd-MM-yyyy HH:mm:ss} -&#45;&#45; %highlight(%-5level) [%blue(%t)] %-50(%cyan(%C{36})): %msg%n%throwable-->
+                <pattern>
+                    %-160(%d{dd-MM-yyyy HH:mm:ss} %customHighlight(%-5level) [%blue(%t)] [%cyan(%logger{10}):%magenta(%line)] %green(%method)) | %msg%n%throwable
+                </pattern>
+            </encoder>
+        </appender>
+
+        <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_FOLDER}/${LOG_FILE}.log</file>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <!-- Date | LogLevel | Thread | Class emitting the Logging | Message -->
+                <Pattern>%d %p [%t] %C{1.} : %m%n</Pattern>
+            </encoder>
+
+            <rollingPolicy
+                    class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- Truncates the file each day or when it bypasses 50MB. -->
+                <fileNamePattern>${LOG_FOLDER}/archived/${LOG_FILE}-%d{yyyy-MM-dd}.%i.log
+                </fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>50MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+        <!-- LOG by default for all the java packages. Starts at 'INFO' level. -->
+        <root level="info"> 
+        <!-- <root level="trace"> --> 
+        
+            <appender-ref ref="Console"/>
+        </root>
+
+        <!-- LOG for specific packages 'com.springboot.hype.repository'. Starts at 'TRACE'. -->
+        <!-- additivity by default is set to true, but we need to set it as false, otherwise all the logs -->
+        <!-- in the specific package would be written twice: 1) root log config and 2) this specific config -->
+        <logger name="com.example.springboot.service" level="trace" additivity="false">
+            <appender-ref ref="RollingFile"/>
+            <appender-ref ref="Console"/>
+        </logger>
+
+    </springProfile>
+
+    <!-- PROD PROFILE-->
+    <springProfile name="prod">
+
+        <!-- custom coloring conversion -->
+        <conversionRule conversionWord="customHighlight" converterClass="com.springboot.hype.utils.HighlightLogBack"/>
+
+        <property name="LOG_FOLDER" value="./logs"/>
+        <property name="LOG_FILE" value="hype_prod"/>
+
+        <appender name="Console"
+                  class="ch.qos.logback.core.ConsoleAppender">
+            <withJansi>true</withJansi>
+            <encoder>
+                <!-- Default pattern: <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n.</pattern> -->
+                <!-- Another pattern: Date | LogLevel | Thread | Class assigned to the Logger | Class emitting the Logging | Message -->
+                <!-- <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) [%thread] %logger{100} %yellow(%C{1.}) : %msg%n%throwable</pattern> -->
+                <!-- Yet another pattern: %d{dd-MM-yyyy HH:mm:ss} -&#45;&#45; %highlight(%-5level) [%blue(%t)] %-50(%cyan(%C{36})): %msg%n%throwable-->
+                <pattern>
+                    %-160(%d{dd-MM-yyyy HH:mm:ss} %customHighlight(%-5level) [%blue(%t)] [%cyan(%logger{10}):%magenta(%line)] %green(%method)) | %msg%n%throwable
+                </pattern>
+            </encoder>
+        </appender>
+
+        <appender name="RollingFile"
+                  class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_FOLDER}/${LOG_FILE}.log</file>
+            <encoder
+                    class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <!-- Date | LogLevel | Thread | Class emitting the Logging | Message -->
+                <Pattern>%d %p [%t] %C{1.} : %m%n</Pattern>
+            </encoder>
+
+            <rollingPolicy
+                    class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- Truncates the file each day or when it bypasses 50MB. -->
+                <fileNamePattern>${LOG_FOLDER}/archived/${LOG_FILE}-%d{yyyy-MM-dd}.%i.log
+                </fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>50MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+
+        <!-- LOG by default for all the java packages. Starts at 'INFO' level. -->
+        <root level="error">
+            <appender-ref ref="Console"/>
+        </root>
+
+        <!-- LOG for specific packages 'com.springboot.hype.repository'. Starts at 'TRACE'. -->
+        <!-- additivity by default is set to true, but we need to set it as false, otherwise all the logs -->
+        <!-- in the specific package would be written twice: 1) root log config and 2) this specific config -->
+        <logger name="com.example.springboot.service" level="trace" additivity="false">
+            <appender-ref ref="RollingFile"/>
+            <appender-ref ref="Console"/>
+        </logger>
+
+    </springProfile>
+
+</configuration>

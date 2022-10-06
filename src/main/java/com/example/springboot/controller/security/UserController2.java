@@ -1,5 +1,6 @@
 package com.example.springboot.controller.security;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class UserController2 {
 	@GetMapping("/all")
 	public ResponseEntity<List<UserDto>> buscarTodos() {
 		return ResponseEntity.ok(userService.buscarTodosUsers2());
+		
 	}
 	
 	//Actualizar un usuario
