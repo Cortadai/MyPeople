@@ -1,9 +1,6 @@
-package com.example.springboot.dto;
+package com.example.springboot.dto.security;
 
-import java.util.Set;
-
-import javax.persistence.Column;
-
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +14,8 @@ import lombok.ToString;
 @ToString
 public class RoleDto {
 	
-	private Long id;
+	//private Long id;
+	@ApiModelProperty(value = "name - Nombre del DTO Rol")
     private String name;
 
 }

@@ -22,10 +22,10 @@ import java.util.Map;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(entityManagerFactoryRef = "mysqlEntityManagerFactory", // Referencia a Bean 3
-		transactionManagerRef = "mysqlTransactionManager", // Referencia a Bean 4
-		basePackages = { "com.example.springboot.repository.security" }) // paquete donde se almacenan los repositorios de
-																		// JPA para la BBDD mysql
+@EnableJpaRepositories(entityManagerFactoryRef = "mysqlEntityManagerFactory", 	// Referencia a Bean 3
+		transactionManagerRef = "mysqlTransactionManager", 						// Referencia a Bean 4
+		basePackages = { "com.example.springboot.repository.security" }) 		// paquete donde se almacenan los repositorios de
+																				// JPA para la BBDD mysql
 public class MysqlDataConfig {
 	private final Environment env;
 

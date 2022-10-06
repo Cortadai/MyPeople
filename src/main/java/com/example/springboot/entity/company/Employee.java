@@ -1,4 +1,4 @@
-package com.example.springboot.entity.postgres;
+package com.example.springboot.entity.company;
 
 import java.util.Date;
 
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table( name = "employees", schema = "my_people")
+@Table(name = "employees", schema = "my_people")
 public class Employee {
 
 	@Id
@@ -44,11 +44,11 @@ public class Employee {
     private double salary;        				//NUMERIC(8, 2)          NOT NULL,
     
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "job_id", referencedColumnName = "job_id")
     private Job jobEmployee;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "department_id", referencedColumnName = "department_id")
     private Department depEmployee;
 	

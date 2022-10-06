@@ -3,7 +3,7 @@ package com.example.springboot.service.security;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.springboot.dto.UserDto;
+import com.example.springboot.dto.security.UserDto;
 import com.example.springboot.entity.security.Role;
 import com.example.springboot.entity.security.User;
 

@@ -1,4 +1,4 @@
-package com.example.springboot.controller.postgres;
+package com.example.springboot.controller.company;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springboot.entity.postgres.Job;
-import com.example.springboot.service.JobService;
+import com.example.springboot.entity.company.Job;
+import com.example.springboot.service.company.JobService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

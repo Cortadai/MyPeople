@@ -1,16 +1,18 @@
-package com.example.springboot.service;
+package com.example.springboot.service.company;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.example.springboot.dto.postgres.JobDTO;
-import com.example.springboot.entity.postgres.Job;
-import com.example.springboot.repository.JobRepository;
+import com.example.springboot.dto.company.JobDTO;
+import com.example.springboot.entity.company.Job;
+import com.example.springboot.repository.company.JobRepository;
 import com.example.springboot.utils.Constants;
 
+@Transactional(transactionManager = "postgresTransactionManager")
 @Service
 public class JobServiceImpl implements JobService {
 	
