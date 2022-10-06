@@ -1,4 +1,4 @@
-package com.example.springboot.entity.postgres;
+package com.example.springboot.entity.company;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ public class Department {
 	@Column(name = "department_name", length = 30, nullable = false)
     private String department_name; 		//CHARACTER VARYING(30) NOT NULL,
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "location_id", referencedColumnName = "location_id")
     private Location LocDepartment;
 }

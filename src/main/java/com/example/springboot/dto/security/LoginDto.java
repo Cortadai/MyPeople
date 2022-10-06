@@ -1,4 +1,3 @@
-
 package com.example.springboot.dto.security;
 
 import javax.validation.constraints.NotEmpty;

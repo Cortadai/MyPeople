@@ -1,4 +1,4 @@
-package com.example.springboot.service;
+package com.example.springboot.service.company;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,31 +6,38 @@ import java.util.Optional;
 import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.example.springboot.dto.postgres.EmployeeDTO;
-import com.example.springboot.entity.postgres.Department;
-import com.example.springboot.entity.postgres.Employee;
-import com.example.springboot.entity.postgres.Job;
-import com.example.springboot.repository.postgres.DepartmentRepository;
-import com.example.springboot.repository.postgres.EmployeeRepository;
-import com.example.springboot.repository.postgres.JobRepository;
+import com.example.springboot.dto.company.EmployeeDTO;
+import com.example.springboot.entity.company.Department;
+import com.example.springboot.entity.company.Employee;
+import com.example.springboot.entity.company.Job;
+import com.example.springboot.repository.company.DepartmentRepository;
+import com.example.springboot.repository.company.EmployeeRepository;
+import com.example.springboot.repository.company.JobRepository;
+import com.example.springboot.resource.EmailBody;
+import com.example.springboot.service.email.EmailService;
 import com.example.springboot.utils.Constants;
 
+@Transactional(transactionManager = "postgresTransactionManager")
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 	
 	private EmployeeRepository employeeRepository;
 	private JobRepository jobRepository;
 	private DepartmentRepository departmentRepository;
+	private EmailService emailService;
 	
 	
 	@Autowired
 	public EmployeeServiceImpl(EmployeeRepository employeeRepository,
 							   JobRepository jobRepository,
-							   DepartmentRepository departmentRepository) {
+							   DepartmentRepository departmentRepository,
+							   EmailService emailService) {
 		this.employeeRepository = employeeRepository;
 		this.jobRepository = jobRepository;
 		this.departmentRepository = departmentRepository;
+		this.emailService = emailService;
 		
 	}
 
@@ -57,6 +64,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 			
 			employeeRepository.delete(existingEmployee);
 			Constants.message = "¡¡ El Empleado Ha sido BORRADO !!";
+			
+			//Envía el email del borrado de un Employee
+			EmailBody emailBody = new EmailBody(Constants.msjEmailBajaEmployeeDestinatarios, 
+												Constants.asuntoEmailBajaEmployee, 
+												Constants.msjEmailBajaEmployee);
+			boolean emaiLisent = this.emailService.sendEmail(emailBody);
+			System.out.println(emaiLisent);
 		}
 		return Constants.message;
 	}
@@ -92,6 +106,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 				employeeRepository.save(employee);
 			 
 				Constants.message = "¡¡ Empleado Creado con Exito !!";
+				//Envía el email del alta de un Employee
+				EmailBody emailBody = new EmailBody(Constants.msjEmailAltaEmployeeDestinatarios, 
+													Constants.asuntoEmailAltaEmployee, 
+													Constants.msjEmailAltaEmployee);
+				boolean emaiLisent = this.emailService.sendEmail(emailBody);
+				System.out.println(emaiLisent);
 			}
 		}
 		return Constants.message;
@@ -151,6 +171,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 					employeeRepository.save(empleadoExiste);
 					 
 					Constants.message = "¡¡ Empleado Modificado con Exito !!";
+					
+					//Envía el email de la modificación de un Employee
+					EmailBody emailBody = new EmailBody(Constants.msjEmailModifEmployeeDestinatarios, 
+														Constants.asuntoEmailModifEmployee, 
+														Constants.msjEmailModifEmployee);
+					boolean emaiLisent = this.emailService.sendEmail(emailBody);
+					System.out.println(emaiLisent);
+
 				}
 			}
 		}

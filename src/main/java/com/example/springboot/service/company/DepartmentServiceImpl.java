@@ -1,14 +1,16 @@
-package com.example.springboot.service;
+package com.example.springboot.service.company;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.example.springboot.entity.postgres.Department;
-import com.example.springboot.repository.postgres.DepartmentRepository;
+import com.example.springboot.entity.company.Department;
+import com.example.springboot.repository.company.DepartmentRepository;
 
+@Transactional(transactionManager = "postgresTransactionManager")
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 

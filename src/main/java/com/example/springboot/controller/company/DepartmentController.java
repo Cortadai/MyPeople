@@ -1,4 +1,4 @@
-package com.example.springboot.controller.postgres;
+package com.example.springboot.controller.company;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springboot.entity.postgres.Department;
-import com.example.springboot.service.DepartmentService;
+import com.example.springboot.entity.company.Department;
+import com.example.springboot.service.company.DepartmentService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

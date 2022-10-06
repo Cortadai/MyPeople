@@ -1,8 +1,5 @@
 package com.example.springboot.dto.security;
 
-import java.util.Set;
-
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -19,20 +16,19 @@ import lombok.ToString;
 @ApiModel(description = "User model information")
 public class UserDto {
 	
-	@ApiModelProperty(value = "UserDto id")
-	private Long id;
-	@ApiModelProperty(value = "UserDto name")
+	//@ApiModelProperty(value = "UserDto id")
+	//private Long id;
+	@ApiModelProperty(value = "name - Nombre del DTO Usuario")
 	private String name;
-	@ApiModelProperty(value = "UserDto email")
+	
+	@ApiModelProperty(value = "email - Email del DTO Usuario")
 	private String email;
-	@ApiModelProperty(value = "UserDto password")
+	
+	@ApiModelProperty(value = "password - Password del DTO Usuario")
 	private String password;
-	@ApiModelProperty(value = "UserDto active")
+	
+	@ApiModelProperty(value = "active - Activo (Si o No) del DTO Usuario")
 	private boolean active;
-	
-	
-	
-	
 	
 }
 

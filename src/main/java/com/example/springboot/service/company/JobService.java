@@ -1,11 +1,11 @@
-package com.example.springboot.service;
+package com.example.springboot.service.company;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.example.springboot.dto.postgres.JobDTO;
-import com.example.springboot.entity.postgres.Department;
-import com.example.springboot.entity.postgres.Job;
+import com.example.springboot.dto.company.JobDTO;
+import com.example.springboot.entity.company.Department;
+import com.example.springboot.entity.company.Job;
 
 public interface JobService {
 

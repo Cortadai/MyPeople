@@ -1,10 +1,11 @@
-package com.example.springboot.controller.postgres;
+package com.example.springboot.controller.company;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springboot.dto.postgres.EmployeeDTO;
-import com.example.springboot.entity.postgres.Employee;
-import com.example.springboot.service.EmployeeService;
+import com.example.springboot.dto.company.EmployeeDTO;
+import com.example.springboot.entity.company.Employee;
+import com.example.springboot.resource.EmailBody;
+import com.example.springboot.service.company.EmployeeService;
+import com.example.springboot.service.email.EmailService;
+import com.example.springboot.utils.Constants;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,10 +32,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class EmployeeController {
 
 	private EmployeeService employeeService;
+	private EmailService emailService;
 
 	@Autowired
-	public EmployeeController(EmployeeService employeeService) {
+	public EmployeeController(EmployeeService employeeService, EmailService emailService) {
 		this.employeeService = employeeService;
+		this.emailService = emailService;
 	}
 	
 	//Listar Empleados por ID
@@ -57,7 +63,7 @@ public class EmployeeController {
 	public ResponseEntity<String> crearEmpleado(@RequestBody EmployeeDTO employeeDto, 
 								@PathVariable("Qtrabajo") String QueTrabajo, 
 								@PathVariable("Qdepartamento") String QueDepartamento) {
-		
+
 		return ResponseEntity.ok(employeeService.crearEmpleado(employeeDto, QueTrabajo, QueDepartamento));
 	}
 	
@@ -71,6 +77,15 @@ public class EmployeeController {
 								@PathVariable("Qdepartamento") String QueDepartamento) {
 		
 		return ResponseEntity.ok(employeeService.modificarEmpleado(employeeDto, id, QueTrabajo, QueDepartamento));
+	}
+	
+	//Eliminar un Empleado, 
+	//devolvemos el Usuario desde el servicio
+	@ApiOperation(value="Eliminar Empleados") //anotacion para documentar con Swagger
+	@DeleteMapping("/borraEmpleado/{idEmpleado}")
+	public ResponseEntity<String> borrarEmpleado(@PathVariable("idEmpleado") int id) {
+
+		return ResponseEntity.ok(employeeService.borrarEmpleado(id));
 	}
 	
 }

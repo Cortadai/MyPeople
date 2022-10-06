@@ -1,4 +1,4 @@
-package com.example.springboot.entity.postgres;
+package com.example.springboot.entity.company;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

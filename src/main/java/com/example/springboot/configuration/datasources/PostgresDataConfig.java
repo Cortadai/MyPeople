@@ -24,7 +24,7 @@ import java.util.Map;
 @EnableJpaRepositories(
         entityManagerFactoryRef = "postgresEntityManagerFactory",
         transactionManagerRef = "postgresTransactionManager",
-        basePackages = {"com.example.springboot.repository.postgres"}
+        basePackages = {"com.example.springboot.repository.company"}
 )
 public class PostgresDataConfig {
     private final Environment env;
@@ -57,7 +57,7 @@ public class PostgresDataConfig {
                 env.getProperty("spring.datasource-postgres.hibernate.hbm2ddl.auto"));
         return postgresEntityManagerFactoryBuilder
                 .dataSource(postgresDataSource)
-                .packages("com.example.springboot.entity.postgres")
+                .packages("com.example.springboot.entity.company")
                 .persistenceUnit("postgresDataSource").properties(postgresJpaProperties).build();
     }
 
