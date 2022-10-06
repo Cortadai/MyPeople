@@ -18,7 +18,15 @@ public class FlyWayConfig {
 	@Value("${spring.datasource-mysql.password}")
 	String datasource_logicMysqlPassword;
 	
-	
+	@Value("${spring.datasource-postgres.url}")
+    String datasourcePostgresUrl;
+    @Value("${spring.datasource-postgres.username}")
+    String datasourcePostgresUser;
+    @Value("${spring.datasource-postgres.password}")
+    String datasourcePostgresPassword;
+    @Value("${spring.datasource-postgres.schema}")
+    String datasourcePostgresSchema;
+
 	
 	
 	
@@ -33,9 +41,21 @@ public class FlyWayConfig {
 				.validateOnMigrate(true).dataSource(datasource_logicMysqlUrl, datasource_logicMysqlUser, datasource_logicMysqlPassword)
 				.locations("filesystem:./src/main/resources/db/migration/mysql/security").load();
 
+		Flyway flywayPostgres = Flyway.configure()
+                .cleanDisabled(true)
+                .table("my_people_schema_history")
+                .baselineOnMigrate(true)
+                .baselineVersion("-1")
+                .encoding(StandardCharsets.UTF_8)
+                .schemas(datasourcePostgresSchema)
+                .validateOnMigrate(true)
+                .dataSource(datasourcePostgresUrl, datasourcePostgresUser, datasourcePostgresPassword)
+                .locations("filesystem:./src/main/resources/db/migration/postgres")
+                .load();
+
 				
 		flywayMysql.migrate();
-		
+		flywayPostgres.migrate();
 
 	}
 }
