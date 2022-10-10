@@ -1,9 +1,14 @@
 package com.example.springboot.service.company;
 
+import java.awt.Color;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.tomcat.util.bcel.Const;
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +23,20 @@ import com.example.springboot.repository.company.JobRepository;
 import com.example.springboot.resource.EmailBody;
 import com.example.springboot.service.email.EmailService;
 import com.example.springboot.utils.Constants;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+
+
+
 
 @Transactional(transactionManager = "postgresTransactionManager")
 @Service
@@ -55,7 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	//Borrar UNO POR ID
 	@Override
-	public String borrarEmpleado(int id) {
+	public String borrarEmpleado(int id) throws MessagingException {
 		if(!employeeRepository.existsById(id)) {
 			Constants.message = "¡¡ El Empleado que solicitas NO Existe !!";
 		}else {
@@ -69,7 +88,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			EmailBody emailBody = new EmailBody(Constants.msjEmailBajaEmployeeDestinatarios, 
 												Constants.asuntoEmailBajaEmployee, 
 												Constants.msjEmailBajaEmployee);
-			boolean emaiLisent = this.emailService.sendEmail(emailBody);
+			Constants.RutaFicheroAdjunto = "";
+			boolean emaiLisent = this.emailService.sendEmail(emailBody, Constants.RutaFicheroAdjunto, Constants.nombreArchivo);
 			System.out.println(emaiLisent);
 		}
 		return Constants.message;
@@ -77,7 +97,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	//Crear
 	@Override
-	public String crearEmpleado(EmployeeDTO employeeDto, String Trabajo, String Departamento) {
+	public String crearEmpleado(EmployeeDTO employeeDto, String Trabajo, String Departamento) throws MessagingException {
 		//Para crear el Empleado, tenemos que verificar que el trabajo y el departamento existen, sino no se creará
 		//si el findByName is present y el nombre de trabajo es el que le pasamos como variable en la url 
 		if(buscarTrabajo(Trabajo) == false)  {
@@ -110,7 +130,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 				EmailBody emailBody = new EmailBody(Constants.msjEmailAltaEmployeeDestinatarios, 
 													Constants.asuntoEmailAltaEmployee, 
 													Constants.msjEmailAltaEmployee);
-				boolean emaiLisent = this.emailService.sendEmail(emailBody);
+				Constants.RutaFicheroAdjunto = "";
+				boolean emaiLisent = this.emailService.sendEmail(emailBody, Constants.RutaFicheroAdjunto, Constants.nombreArchivo);
 				System.out.println(emaiLisent);
 			}
 		}
@@ -138,7 +159,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	//Modificar
 	@Override
-	public String modificarEmpleado(EmployeeDTO employeeDto, int id, String Trabajo, String Departamento) {
+	public String modificarEmpleado(EmployeeDTO employeeDto, int id, String Trabajo, String Departamento) throws MessagingException {
 		
 		//busco al empleado que exista
 		if (!employeeRepository.findById(id).isPresent()) {
@@ -176,13 +197,106 @@ public class EmployeeServiceImpl implements EmployeeService {
 					EmailBody emailBody = new EmailBody(Constants.msjEmailModifEmployeeDestinatarios, 
 														Constants.asuntoEmailModifEmployee, 
 														Constants.msjEmailModifEmployee);
-					boolean emaiLisent = this.emailService.sendEmail(emailBody);
+					Constants.RutaFicheroAdjunto = "";
+					boolean emaiLisent = this.emailService.sendEmail(emailBody, Constants.RutaFicheroAdjunto, Constants.nombreArchivo);
 					System.out.println(emaiLisent);
 
 				}
 			}
 		}
 		return Constants.message;
+	}
+	
+	
+
+	@Override
+	public String AutoInformeEmpleados() throws IOException, MessagingException {
+		
+		List<Employee> employeeParaListado = new ArrayList<>();
+		employeeParaListado = employeeRepository.findAll();
+		
+		int TotalEmpleados = 0;
+		PdfPTable tablaEmp = new PdfPTable(9);
+		tablaEmp.setWidthPercentage(100f);
+		tablaEmp.setSpacingBefore(5);
+		
+		//ENCABEZADO DE LA TABLA
+		String[] cabecera = {"id", "NOMBRE", "APELLIDOS", "EMAIL", "TELEFONO", "FECHA-ALTA", "SALARIO", "TRABAJO", "DPTO"};
+		
+		PdfPCell cell = new PdfPCell();
+		cell.setBackgroundColor(Color.BLUE);
+		cell.setPadding(5);
+		cell.setVerticalAlignment(0);
+		Font font = FontFactory.getFont(FontFactory.HELVETICA);
+        font.setColor(Color.WHITE);
+		for (int i=0; i < cabecera.length; i++) {
+			cell.setPhrase(new Phrase(cabecera[i], font));
+			tablaEmp.addCell(cell);
+		}
+		
+		
+		for (Employee listaEmpleados : employeeParaListado) {
+			//tablaEmp.addCell(String.valueOf(listaEmpleados.getEmployee_id()));
+			tablaEmp.addCell(listaEmpleados.getEmployee_id()+"");
+			tablaEmp.addCell(listaEmpleados.getFirst_name());
+			tablaEmp.addCell(listaEmpleados.getLast_name());
+			tablaEmp.addCell(listaEmpleados.getEmail());
+			tablaEmp.addCell(listaEmpleados.getPhone_number());
+			tablaEmp.addCell(listaEmpleados.getHire_date()+"");
+			tablaEmp.addCell(listaEmpleados.getSalary()+"");
+			tablaEmp.addCell(listaEmpleados.getJobEmployee().getJob_title());
+			tablaEmp.addCell(listaEmpleados.getDepEmployee().getDepartment_name());
+			
+			TotalEmpleados++;
+			
+		}
+		
+		Document document = new Document(PageSize.A4.rotate());
+		document.setMargins(28.34f, 28.34f, 28.34f, 28.34f);
+		
+        //PdfWriter.getInstance(document, response.getOutputStream());
+		Constants.RutaFicheroAdjunto = "src/main/resources/pdf/InformeEmpleados.pdf";
+		Constants.nombreArchivo = "InformeEmpleados.pdf";
+		PdfWriter.getInstance(document, new FileOutputStream(Constants.RutaFicheroAdjunto));
+
+        document.open();
+        
+        //incluir Logotipo MyPeople
+        Image image = Image.getInstance ("src/main/resources/img/myPeopleLogo.png");
+        image.scaleAbsolute(226, 169);
+        document.add(image);
+        
+        //Incluimos un título al documento
+        Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        fontTitle.setSize(18);
+        
+        Paragraph titulo = new Paragraph("Listado de Empleados - MyPeople", fontTitle);
+        titulo.setAlignment(Paragraph.ALIGN_CENTER);
+        
+        Font fontParagraph = FontFactory.getFont(FontFactory.HELVETICA);
+        fontParagraph.setSize(6);
+
+        Font fontTotal = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        fontTotal.setSize(12);
+        Paragraph totalEmpleadosPgr = new Paragraph("TOTAL DE EMPLEADOS = " + TotalEmpleados, fontTitle);
+        totalEmpleadosPgr.setAlignment(Paragraph.ALIGN_LEFT);
+
+        document.add(titulo);
+        document.add(Chunk.NEWLINE); //salto de línea
+        document.add(tablaEmp);
+        document.add(Chunk.NEWLINE); //salto de línea
+        document.add(totalEmpleadosPgr); 
+        document.close();
+		
+        //Envía el email del informe de Empleados
+		EmailBody emailBody = new EmailBody(Constants.msjEmailInforme1EmployeeDestinatarios, 
+											Constants.asuntoEmailInforme1Employee, 
+											Constants.msjEmailInforme1Employee);
+		
+		boolean emaiLisent = this.emailService.sendEmail(emailBody, Constants.RutaFicheroAdjunto, Constants.nombreArchivo);
+		System.out.println(emaiLisent);
+		
+		return "¡¡ Listado Generado y enviado por email !!";
 	}
 	
 }

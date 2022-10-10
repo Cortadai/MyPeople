@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	// EXTRACION DE LISTA DE USUARIOS AUTOMÁTICA
-	@Scheduled(cron = "*/10 * * * * *", zone = "Europe/Paris")
+	//@Scheduled(cron = "*/10 * * * * *", zone = "Europe/Paris")
 	@Override
 	public void Imprimir_informacion() {
 

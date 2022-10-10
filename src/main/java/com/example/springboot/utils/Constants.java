@@ -4,8 +4,11 @@ public class Constants {
 
 	public static String message = "";
 	
-	public static final String ADMIN = "Admin";
+	public static String RutaFicheroAdjunto = "";
+	public static String nombreArchivo = "";
 	
+	
+	public static final String ADMIN = "Admin";
 	public static final String CUSTOMER = "Customer";
 	
 ///// EMAIL DE ALTA DE EMPLEADOS EN EL SISTEMA **************************************************	
@@ -47,5 +50,25 @@ public class Constants {
 			", " +
 			"rafael.rodriguez@entelgy-ibai.com";
 ///// EMAIL DE BAJA DE EMPLEADOS EN EL SISTEMA **************************************************
+	
+///// EMAIL DE INFORME DIARIO DE EMPLEADOS EN EL SISTEMA **************************************************
+	public static final String asuntoEmailInforme1Employee =
+			"INFORME DIARIO DE LISTADO DE EMPLEADOS EN MyPeople";
+	public static final String msjEmailInforme1Employee = 
+			"<html><body><font size='3' face='verdana'>" + "Hola, <br>" + 
+			"Se adjunta el informe diario de Empleados. <br><br>" + 
+			"Atentamente.<br>" + 
+			"____________________________<br>" + 
+			" MyPeople RRHH | BILBAO <br>" + 
+			" Tfno. 944 000 000 " + "</font></body></html>";
+	
+	public static final String msjEmailInforme1EmployeeDestinatarios = 
+			"david.cortaberria@entelgy-ibai.com" + 
+			", " + 
+			"david.palanca@entelgy-ibai.com" + 
+			", " +
+			"rafael.rodriguez@entelgy-ibai.com";
+///// EMAIL DE INFORME DIARIO DE EMPLEADOS EN EL SISTEMA **************************************************
+
 
 }
