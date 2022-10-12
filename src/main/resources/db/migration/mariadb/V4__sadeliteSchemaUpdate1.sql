@@ -1,0 +1,1 @@
+ALTER TABLE stockshares CHANGE numTotal num_total integer not null;

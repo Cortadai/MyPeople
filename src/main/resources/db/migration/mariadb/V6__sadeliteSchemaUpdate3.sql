@@ -1,0 +1,1 @@
+ALTER TABLE offers ADD COLUMN final_date DATE DEFAULT NULL AFTER initial_date;

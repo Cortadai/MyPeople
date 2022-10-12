@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: Implicate5777
+      POSTGRES_PASSWORD: 5dGYxe9QT25dV4
+      POSTGRES_DB: postgreshypedb
+      PGDATA: /data/postgres
+    volumes:
+      - '/home/root@EI003287/postges:/data/postgres'
+    ports:
+      - '5431:5432'
+    networks:
+      - hypenetwork
+    restart: always
+  mysql:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: shCmHNr6zw8EDH
+      MYSQL_DATABASE: mysqlhypedb
+      MYSQL_USER: Plated4181
+      MYSQL_PASSWORD: PmKcqsAmEdcFK5
+    volumes:
+      - '/home/root@EI003287/mysql:/var/lib/mysql'
+    ports:
+      - '3307:3306'
+    networks:
+      - hypenetwork
+    restart: always
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: cV5XiLRwim6pou
+      MARIADB_DATABASE: mariadbhypedb
+      MARIADB_USER: Percolate0068
+      MARIADB_PASSWORD: 8vvv25LU7LWUyV
+    volumes:
+      - '/home/root@EI003287/mariadb:/var/lib/mariadb'
+    ports:
+      - 3308:3306
+    networks:
+      - hypenetwork
+    restart: always
+networks:
+  hypenetwork:
+    name: hypenetwork
+    driver: bridge

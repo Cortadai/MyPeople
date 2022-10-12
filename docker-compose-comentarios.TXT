@@ -1,0 +1,51 @@
+services:
+
+  postgres:
+  # imagen base que se descarga
+  image: postgres
+  # nombre que le damos al contenedor
+  container_name: postgres
+  # variables de entorno para arrancar el contenedor
+  environment:
+    POSTGRES_USER: Implicate5777
+    POSTGRES_PASSWORD: 5dGYxe9QT25dV4
+    POSTGRES_DB: postgreshypedb
+    PGDATA: /data/postgres
+  # volumenes donde guardamos la informacion de tablas en local (se linkea con el contenedor)
+  volumes:
+    - ./vol/postgreshypedb_volume:/data/postgres
+  # puertos expuestos -> host (nuestro PC) : docker (lo virtual)
+  ports:
+    - 5431:5432
+  # red local para contenedores
+  networks:
+    - hypenetwork
+  # opcion para reiniciar el contenedor con cada cambio
+  restart: always
+
+  mysql:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: shCmHNr6zw8EDH
+      MYSQL_DATABASE: mysqlhypedb
+      MYSQL_USER: Plated4181
+      MYSQL_PASSWORD: PmKcqsAmEdcFK5
+    volumes:
+      - ./vol/mysqlhypedb_volume:/var/lib/mysql
+    ports:
+      - 3307:3306
+    networks:
+      - hypenetwork
+    restart: always
+
+networks:
+  hypenetwork:
+    name: hypenetwork
+    # Tipo de red para que los contenedores se vean entre si
+    driver: bridge
+
+volumes:
+  postgreshypedb_volume:
+  mysqlhypedb_volume:
+    

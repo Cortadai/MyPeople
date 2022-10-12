@@ -224,7 +224,7 @@
 
 		<!-- custom coloring conversion -->
 		<conversionRule conversionWord="customHighlight"
-			converterClass="com.springboot.hype.utils.HighlightLogBack" />
+			converterClass="com.example.springboot.utils.HighlightLogBack" />
 
 		<property name="LOG_FOLDER" value="./logs" />
 		<property name="LOG_FILE" value="hype_prod" />
@@ -272,7 +272,7 @@
 
 
 		<!-- LOG by default for all the java packages. Starts at 'INFO' level. -->
-		<root level="error">
+		<root level="info">
 			<appender-ref ref="Console" />
 		</root>
 

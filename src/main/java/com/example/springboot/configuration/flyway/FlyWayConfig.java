@@ -17,6 +17,8 @@ public class FlyWayConfig {
 	String datasource_logicMysqlUser;
 	@Value("${spring.datasource-mysql.password}")
 	String datasource_logicMysqlPassword;
+	@Value("${spring.datasource-mysql.schema}")
+	String datasourceMySqlSchema;
 	
 	@Value("${spring.datasource-postgres.url}")
     String datasourcePostgresUrl;
@@ -27,6 +29,12 @@ public class FlyWayConfig {
     @Value("${spring.datasource-postgres.schema}")
     String datasourcePostgresSchema;
 
+    @Value("${spring.datasource-mariadb.url}")
+	String datasource_logicMariadblUrl;
+	@Value("${spring.datasource-mariadb.username}")
+	String datasource_logicMariadbUser;
+	@Value("${spring.datasource-mariadb.password}")
+	String datasource_logicMariadbPassword;
 	
 	
 	
@@ -37,7 +45,7 @@ public class FlyWayConfig {
 				.cleanDisabled(true)
 				.table("security_schema_history") //nombre de la tabla donde flyway guarda el histórico
 				.baselineOnMigrate(true).baselineVersion("-1").encoding(StandardCharsets.UTF_8)
-				.schemas("security") //nombre de la bbdd que flyway va a mantener
+				.schemas(datasourceMySqlSchema) //nombre de la bbdd que flyway va a mantener
 				.validateOnMigrate(true).dataSource(datasource_logicMysqlUrl, datasource_logicMysqlUser, datasource_logicMysqlPassword)
 				.locations("filesystem:./src/main/resources/db/migration/mysql/security").load();
 
@@ -53,9 +61,18 @@ public class FlyWayConfig {
                 .locations("filesystem:./src/main/resources/db/migration/postgres")
                 .load();
 
-				
+		Flyway flywayMariaDB = Flyway.configure()
+				.cleanDisabled(true)
+				.table("mariadbhypedb_schema_history") //nombre de la tabla donde flyway guarda el histórico
+				.baselineOnMigrate(true).baselineVersion("-1").encoding(StandardCharsets.UTF_8)
+				.schemas("mariadbhypedb") //nombre de la bbdd que flyway va a mantener
+				.validateOnMigrate(true).dataSource(datasource_logicMariadblUrl, datasource_logicMariadbUser, datasource_logicMariadbPassword)
+				.locations("filesystem:./src/main/resources/db/migration/mariadb").load();
+
+		
 		flywayMysql.migrate();
 		flywayPostgres.migrate();
+		flywayMariaDB.migrate();
 
 	}
 }
